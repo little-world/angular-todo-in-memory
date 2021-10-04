@@ -9,7 +9,7 @@ import {TodoService} from "../todo.service";
   styleUrls: ['./todo-form.component.css']
 })
 export class TodoFormComponent implements OnInit {
-  todo = new Todo();
+  todo = new Todo(0, "");
 
   @Input() todoList!: TodoListComponent;
 
@@ -17,9 +17,8 @@ export class TodoFormComponent implements OnInit {
   ngOnInit(): void {}
 
   add() {
-    this.todoService.save(this.todo).subscribe(
-      () => this.todoList.getAll()
-  )
+    this.todoService.save(this.todo)
+    this.todoList.getAll()
   }
 }
 

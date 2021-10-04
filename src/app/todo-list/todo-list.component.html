@@ -1,6 +1,6 @@
 <table>
   <tr *ngFor="let todo of todos">
     <td>{{todo.task}}</td>
-    <td><p (click)="delete(todo.id)">del</p></td>
+    <td><button (click)="delete(todo.id)">del</button></td>
   </tr>
 </table>

@@ -1,4 +1,3 @@
 export class Todo {
-  id: number = 0;
-  task: string = "";
-}
+  constructor(public id: number,public task: string) {}
+ }

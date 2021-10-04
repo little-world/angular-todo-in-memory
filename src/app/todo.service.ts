@@ -1,8 +1,5 @@
-import { Injectable } from '@angular/core';
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {Injectable} from '@angular/core';
 import {Todo} from "./todo";
-import {Observable} from "rxjs";
-
 
 
 @Injectable({
@@ -10,23 +7,20 @@ import {Observable} from "rxjs";
 })
 export class TodoService {
 
-  private todoUrl: string = 'api/todos';
+  todos: Todo[] = []
 
-  httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-  };
+  constructor() { }
 
-  constructor(public http: HttpClient) { }
-
-  getAll(): Observable<Todo[]> {
-    return this.http.get<Todo[]>(this.todoUrl)
+  getAll()  {
+    return this.todos;
   }
 
-  save(todo: Todo): Observable<Todo> {
-    return this.http.post<Todo>(this.todoUrl, todo, this.httpOptions)
+  save(todo: Todo) {
+    let newId = this.todos.length > 0 ? Math.max(...this.todos.map(todo => todo.id)) + 1 : 11;
+    this.todos.push(new Todo(newId, todo.task))
   }
 
-  delete(id: number): Observable<any> {
-    return this.http.delete(this.todoUrl + '/' + id, this.httpOptions)
+  delete(id: number) {
+    this.todos = this.todos.filter(todo => todo.id != id)
   }
 }

@@ -14,13 +14,13 @@ export class TodoListComponent implements OnInit {
   constructor(public todoService: TodoService) {}
 
   getAll() {
-    this.todoService.getAll().subscribe(
-      data => this.todos = data
-  )}
+    this.todos = this.todoService.getAll()
+  }
 
   delete(id: number) {
-    this.todoService.delete(id).subscribe(
-      () => this.getAll()
-  )}
+    console.log(id)
+    this.todoService.delete(id)
+    this.getAll()
+  }
 }
 
