@@ -18,7 +18,10 @@ export class TodoFormComponent implements OnInit {
 
   add() {
     this.todoService.save(this.todo).subscribe(
-      () => this.todoList.getAll()
+      () => {
+        this.todoList.getAll()
+      }
+
   )
   }
 }
