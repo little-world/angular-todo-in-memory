@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {HttpClient, HttpErrorResponse, HttpHeaders} from "@angular/common/http";
 import {Todo} from "./todo";
-import {Observable} from "rxjs";
+import {Observable, throwError} from "rxjs";
+import {catchError, tap} from "rxjs/operators";
 
 
 
@@ -9,6 +10,7 @@ import {Observable} from "rxjs";
   providedIn: 'root'
 })
 export class TodoService {
+
 
   private todoUrl: string = 'api/todos';
 
@@ -20,13 +22,24 @@ export class TodoService {
 
   getAll(): Observable<Todo[]> {
     return this.http.get<Todo[]>(this.todoUrl)
+      .pipe(
+        tap(_ => console.log('fetched heroes')),
+      );
   }
 
   save(todo: Todo): Observable<Todo> {
-    return this.http.post<Todo>(this.todoUrl, todo, this.httpOptions)
+    console.log ('in service post')
+    return this.http.post<Todo>(this.todoUrl, todo)
+      .pipe(
+        tap((newTodo: Todo) => console.log(`added todo w/ id=${newTodo.id}`)),
+      )
   }
 
   delete(id: number): Observable<any> {
     return this.http.delete(this.todoUrl + '/' + id, this.httpOptions)
+  }
+
+  genId(todos: Todo[]): number {
+    return todos.length > 0 ? Math.max(...todos.map(td => td.id)) + 1 : 11;
   }
 }

@@ -7,7 +7,7 @@ import { Todo } from './todo';
 })
 export class InMemoryDataService implements InMemoryDbService {
   createDb() {
-    const todos = [
+    let todos = [
       { id: 11, task: 'task1' },
       { id: 12, task: 'task2' },
       { id: 13, task: 'task3' },
@@ -15,9 +15,9 @@ export class InMemoryDataService implements InMemoryDbService {
       { id: 15, task: 'task5' }
     ];
     return {todos};
+
+
   }
 
-   genId(todos: Todo[]): number {
-    return todos.length > 0 ? Math.max(...todos.map(todo => todo.id)) + 1 : 11;
-  }
+
 }
